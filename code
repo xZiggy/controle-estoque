@@ -1,0 +1,136 @@
+/* 
+Escreva um programa para organizar a lista de produtos vendidos por uma empresa.
+Precisamos manter somente o código do produto (int) e seu preço (double).
+O programa deve ter opções para que o usuário possa:
+
+    1 - Sair do Programa;
+    2 - Incluir um novo produto, informando código e preço;
+    3 - Mostrar todos os produtos, em ordem de código, e seus preços;
+    4 - Mostrar o preço de um produto cujo código é informado pelo usuário.
+    5 - Nova Funcionalidade: Remover um produto da lista
+
+Observações:
+
+    - Use dois arrays (vetores) para manter códigos e preços;
+    - A empresa tem, no máximo, 1000 produtos diferentes, com códigos entre 1 e 10000 e preços variando entre R$ 1 e R$ 20000 ;
+    - No início, o programa deve, antes de mostrar as opções para o usuário, incluir na lista 30 produtos com códigos e preços aleatórios ;
+    - Mantenha a lista sempre em ordem de código !
+    - Note que os produtos não podem ter códigos repetidos ;
+    - Será necessário manter também a informação de quantos produtos estão na lista.
+
+
+Desafios
+
+    Mostrar todos os produtos com preço acima de um determinado valor, em ordem de preço
+    Inclua a representação dos nomes dos produtos utilizando uma matriz de strings */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <string.h>
+
+void OrdenarProdutosPorCodigo(int codigo[], int produtos, double preco[]); 
+void Gerar30ProdutosAleatorios(int codigo[], int produtos, double preco[], int i);
+int Menu(int opcao, int codigo[], int produtos, double preco[], int limiteProdutos, int i);
+void IncluirProduto(int codigo[], int produtos, double preco[], int limiteProdutos);
+void VerificadorCodigoRepetido(int codigo[], int produtos);
+
+int main()
+{
+    int codigo[1000], produtos=0, i=0, opcao=0, limiteProdutos=1000; 
+	double preco[1000]; 
+	Gerar30ProdutosAleatorios(codigo, produtos, preco, i);
+	Menu(opcao, codigo, produtos, preco, limiteProdutos, i);
+	
+}
+
+void Gerar30ProdutosAleatorios(int codigo[], int produtos, double preco[], int i)
+{
+	srand( time(NULL) );
+    while (i<30)
+       {
+          codigo[i] = rand()%1000;
+          preco[i] = rand()%1000;
+          produtos = produtos + 1;
+          printf("Codigo: %d Preco: %.2f BRL \n",codigo[i], preco[i]);
+          i = i+1;
+       }   
+}
+
+void OrdenarProdutosPorCodigo(int codigo[], int produtos, double preco[])
+{
+int troca, i=0;
+	if (i<produtos)
+        {
+              if (codigo[i+1]>codigo[i])
+                {
+                	troca == codigo[i+1];
+                	codigo[i+1] == codigo [i];
+                	codigo[i] == troca;
+                	
+                	troca == preco[i+1];
+                	preco[i+1] == preco [i];
+                	preco[i] == troca;
+				}
+			printf("Codigo: %d Preco: %.2f BRL \n",codigo[i], preco[i]);
+			i++;
+        }
+}
+
+int Menu(int opcao, int codigo[], int produtos, double preco[], int limiteProdutos, int i)
+{
+	printf ("\nMENU: \n");
+	printf ("Digite 1 para sair do programa \n");
+    printf ("Digite 2 para incluir um novo produto \n");
+    printf ("Digite 3 para mostrar todos os produtos cadastrados \n");
+    printf ("Digite 4 para pesquisar um produto por codigo \n");
+    printf ("Digite 5 para remover um produto \n");
+    scanf ("%d", &opcao);
+    switch (opcao)
+              {
+				case 1:
+                  break;
+                case 2:
+                  IncluirProduto(codigo, produtos, preco, limiteProdutos);
+                  break;
+                case 3:
+                  OrdenarProdutosPorCodigo(codigo, produtos, preco);
+                  for (i=0;i<produtos;i++)
+                    {
+                    	printf("%d", codigo);
+					}
+              }
+
+}
+
+void IncluirProduto(int codigo[], int produtos, double preco[], int limiteProdutos)
+{
+	int cod, valor;
+	printf ("\nInsira o codigo do produto (Entre 0 e 1000): \n");
+	scanf ("%d", &cod);
+	VerificadorCodigoRepetido(codigo, produtos);
+	while (cod > 1000||cod<0)
+	  {
+	  	printf ("\nInsira o codigo do produto (Entre 0 e 1000): \n");
+        scanf ("%d", &cod);
+	  }
+	codigo[produtos+1] == cod;
+	printf ("\nInsira o preco do produto: \n");
+	scanf ("%f", &valor);
+	preco[produtos+1] == valor;
+	produtos++;
+}
+
+void VerificadorCodigoRepetido(int codigo[], int produtos)
+{
+	int i=0, cod=0;
+	while(i<produtos)
+	  {
+	  	if (cod = codigo[i])
+	  	  {
+	  	  	printf ("\nInsira o codigo do produto (Entre 0 e 1000): \n");
+	  	  	scanf ("%d", &cod);
+		  }
+	  i = i+1;
+	  }
+}
